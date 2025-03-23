@@ -1,0 +1,19 @@
+name: Build Docker Image on Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: 🐳 Construir imagen Docker
+        run: |
+          cd docker-backup
+          docker build -t backup-script .
