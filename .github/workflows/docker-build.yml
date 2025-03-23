@@ -1,4 +1,4 @@
-name: Build and Run Docker Backup
+name: Build and Run Docker Backup Test
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker.io
 
-      - name: 🛠️ Construir imagen Docker
+      - name: 🛠️ Construir imagen de prueba
         run: |
           cd docker-backup
-          sudo docker build -t backup-script .
+          sudo docker build -f Dockerfile.test -t backup-test .
 
-      - name: ▶️ Ejecutar contenedor de prueba
+      - name: ▶️ Ejecutar backup de prueba
         run: |
-          sudo docker run --rm backup-script
+          sudo docker run --rm backup-test
