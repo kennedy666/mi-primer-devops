@@ -1,4 +1,4 @@
-name: Build Docker Image on Push
+name: Build and Run Docker Backup
 
 on:
   push:
@@ -6,14 +6,23 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-run:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Clonar repositorio
         uses: actions/checkout@v3
 
-      - name: 🐳 Construir imagen Docker
+      - name: 🐳 Instalar Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+
+      - name: 🛠️ Construir imagen Docker
         run: |
           cd docker-backup
-          docker build -t backup-script .
+          sudo docker build -t backup-script .
+
+      - name: ▶️ Ejecutar contenedor de prueba
+        run: |
+          sudo docker run --rm backup-script
